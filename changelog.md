@@ -1,6 +1,14 @@
 Change-log:
 
 
+v2.2 - In progress - 6/7/21
+- commented out some of the functionality (output files, etc for testing purposes)
+- working well for the most part in Catalina, Mojave, High Sierra
+- needs testing in Big Sur
+- need to create README
+
+
+
 v2.1 beta2 —update 5/24/21
 - improved functionality of network information printing
     - conditional logic dependent on active network interface
