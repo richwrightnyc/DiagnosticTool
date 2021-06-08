@@ -1,7 +1,6 @@
 # DiagnosticTool
 
-written for The Mac Support Store
-written by Rich Wright
+written for The Mac Support Store by Rich Wright
 
 # Scope
 This tool is intended to help automate Macintosh diagnostics. It relies heavily on system_profiler to pull relevent information about the host machine and generates a report with this information.
