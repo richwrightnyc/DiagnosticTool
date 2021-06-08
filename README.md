@@ -6,7 +6,7 @@ written for The Mac Support Store by Rich Wright
 This tool is intended to help automate Macintosh diagnostics. It relies heavily on system_profiler to pull relevent information about the host machine and generates a report with this information.
 
 # Use Case
-Can be used in person or in remote diagnostic applications.
+Can be run locally or in remotely.
 
 # Caveats
 Depending on the macOS version, errors may be encountered with some of the functions of this tool. I've tried my best to mitigate and/or work around some of them, and this is a work in progress.
