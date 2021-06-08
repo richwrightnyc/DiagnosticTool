@@ -1,0 +1,708 @@
+ ###########################################################
+-->> ABOUT
+###########################################################
+(*
+ 
+ Phil Stokes -- 2017
+ applehelpwriter.com
+ sqwarq.com
+ 
+ *)
+###########################################################
+-->> DESCRIPTION
+###########################################################
+(*
+ 
+ This script searches for and collects various logs and reports for troubleshooting DetectX Swift.
+ After running the script, the files and reports it collects will be on the Desktop. Please select them all, control-click and choose 'compress' to create a zip archive and send to support@sqwarq.com
+ 
+ 
+ 
+ *)
+###########################################################
+-->> USAGE
+###########################################################
+(*
+ 
+ 1. This script requires an Administrator password. If you do not have admin privileges, please ask an administrator to run this script for you from within your user account.
+ 
+ 2. Run the script. It may produce anything between 0 and 5 reports on your Desktop.
+ Each file will be on your Desktop and begins with the prefix 'DetectX2_'.
+ 
+ 3. Please zip the files into an archive and send to support@sqwarq.com
+ 
+ 4. If the script produces any error messages, please take a note (or even better a screenshot) of the error and send that to us also.
+ 
+ Thank you for your assistance.
+ 
+ 
+ *)
+
+
+###########################################################
+-->> IMPORT STATEMENTS
+###########################################################
+use scripting additions
+use framework "Foundation"
+use framework "AppKit"
+
+###########################################################
+-->> VARIABLES
+###########################################################
+property NSString : a reference to current application's NSString
+property NSMutableString : a reference to current application's NSMutableString
+set theApps to current application's NSWorkspace's sharedWorkspace()'s runningApplications()
+set theBundleIDs to current application's NSMutableArray's new()
+
+set gathered to {}
+set homePath to (POSIX path of (path to home folder))
+
+
+###########################################################
+-->> HANDLERS
+###########################################################
+
+on gatherCrashLogsForUser(usr)
+    set theReports to paragraphs of (do shell script "cd  " & usr & "/Library/Logs/DiagnosticReports; ls -alF | grep -i detectx")
+    set lastReportIndex to count of theReports
+    if lastReportIndex > 0 then
+        set lastReport to theReports's item lastReportIndex
+        try
+            set o to offset of "DetectX-Swift" in lastReport
+            set fileName to text o thru -1 of lastReport
+            do shell script "ditto " & usr & "/Library/Logs/DiagnosticReports/" & (quoted form of fileName) & " " & usr & "/Desktop/Sqwarq_Support/DetectX-Swift_CrashLog.crash"
+            on error
+            set end of my gathered to "Could not get offset of 'DetectX-Swift' >" & homePath & "Desktop/Sqwarq_Support/Errors.txt"
+        end try
+        
+    end if
+end gatherCrashLogsForUser
+
+
+on gatherCurrentProcsForUser(usr)
+    set dest to usr & "/Desktop/Sqwarq_Support/DetectX_Swift_Processes.txt"
+    
+    try
+        do shell script "cname=`scutil --get ComputerName | tr ' ' '_' | tr -d \\'`; now=`date +\"_%Y-%m-%d\"`; echo $cname$now > " & dest
+    end try
+    
+    try
+        do shell script "echo \"Collection time -> `date`\" >> " & dest
+    end try
+    
+    try
+        do shell script "echo '\n\n' >> " & dest
+    end try
+    
+    -- ps with ppid
+    try
+        do shell script "ps -axo user,pid,ppid,%cpu,%mem,start,time,command >> " & dest
+        set end of my gathered to "gotProcs/"
+    end try
+    
+    
+    try
+        do shell script "echo '\n\n' >> " & dest
+    end try
+    
+    -- mdutil
+    try
+        do shell script "mdutil -s / >> " & dest
+    end try
+    
+    try
+        do shell script "echo '\n\n' >> " & dest
+    end try
+    
+    -- csrutil
+    try
+        do shell script "csrutil status >> " & dest
+    end try
+    
+    try
+        do shell script "echo '\n\n' >> " & dest
+    end try
+    
+    -- tmutil / time machine backup
+    try
+        do shell script "echo 'Time Machine:' >> " & dest
+    end try
+    
+    try
+        set tm to do shell script "tmutil latestbackup"
+        
+        if tm does not contain "Backups.backupdb" then
+            set tm to "No backups found."
+        end if
+        on error
+        set tm to "No backups found."
+    end try
+    
+    try
+        do shell script "echo '" & tm & "' >> " & dest
+        do shell script "echo '\n\n' >> " & dest
+    end try
+    
+    
+    -- ifconfig
+    try
+        do shell script "echo 'ifconfig:' >> " & dest
+    end try
+    
+    try
+        do shell script "ifconfig >> " & dest
+    end try
+    
+    
+    -- launchctl
+    try
+        do shell script "echo '\n\nGlobal processes:' >> " & dest
+    end try
+    
+    try
+        do shell script "launchctl list | grep -v apple >> " & dest with administrator privileges
+        on error
+        do shell script "echo 'User cancelled request for Admin privileges' >>" & dest
+    end try
+    
+    try
+        do shell script "echo '\n\nUser processes:' >> " & dest
+    end try
+    
+    try
+        do shell script "launchctl list | grep -v apple >> " & dest
+    end try
+    
+    try
+        do shell script "echo '\n\n' >> " & dest
+    end try
+    
+    --kexts
+    try
+        do shell script "echo 'Kextstat:' >> " & dest
+    end try
+    
+    try
+        do shell script "kextstat | grep -iv apple >> " & dest
+    end try
+    
+    try
+        do shell script "echo '\n\n' >> " & dest
+    end try
+    
+    -- profiles
+    try
+        do shell script "echo 'Profiles:' >> " & dest
+    end try
+
+    try
+        do shell script "profiles show -all >> " & dest with administrator privileges
+    end try
+
+    -- mail rules
+    set homePath to (POSIX path of (path to home folder))
+    try
+        do shell script "echo '\n\nMail Rule Scripts:' >> " & dest
+    end try
+
+    set localRuleScripts to "None or N/A"
+    set cloudRuleScripts to "None or N/A"
+
+    -- get the v number
+    set veeNumber to "2"
+    try
+        repeat with i from 3 to 12
+            set theLib to homePath & "Library/Mail/V" & i
+            try
+                do shell script "cd " & theLib
+                set veeNumber to i
+            end try
+        end repeat
+    end try
+
+    try
+        set localRuleScripts to do shell script "grep -A1 \"AppleScript\" '" & homePath & "Library/Mail/V" & veeNumber & "/MailData/SyncedRules.plist' | grep -v AppleScript | sed 's/<string>//g' | sed 's/<\\/string>//g' | sed 's/--//g'"
+    end try
+    try
+        set cloudRuleScripts to do shell script "grep -A1 \"AppleScript\" '" & homePath & "Library/Mobile Documents/com~apple~mail/Data/MailData/ubiquitous_SyncedRules.plist' | grep -v AppleScript | sed 's/<string>//g' | sed 's/<\\/string>//g' | sed 's/--//g'"
+    end try
+    try
+        do shell script "printf 'Local Rules: \n\t" & localRuleScripts & "' >> " & dest
+    end try
+    try
+        do shell script "printf '\nCloud Rules: \n\t" & cloudRuleScripts & "' >> " & dest
+    end try
+
+    -- shell and conf
+    try
+        do shell script "echo '\n\nShell and conf files in /etc:\n' >> " & dest
+    end try
+    
+    try
+        set all_Shells to (do shell script "cd /etc; ls -haltF | uniq")
+        do shell script "echo " & quoted form of all_Shells & " >> " & dest
+    end try
+
+    -- scutil proxy
+    try
+        do shell script "echo '\n\nscutil proxy:' >> " & dest
+    end try
+
+    try
+        do shell script "scutil --proxy >> " & dest
+    end try
+
+    -- hosts
+    try
+        do shell script "echo '\n\n' >> " & dest
+    end try
+    
+    try
+        do shell script "cat /etc/hosts >> " & dest
+    end try
+    
+    -- security trust
+    try
+        do shell script "echo '\n\nTrust Settings:' >> " & dest
+    end try
+    
+    try
+        do shell script "security dump-trust-settings >> " & dest
+    end try
+    
+    -- deprecated login items
+    set _fl to "None"
+    try
+        set _li to "/private/var/root/Library/Preferences/com.apple.loginitems.plist"
+        set _fl to do shell script "cat " & _li with administrator privileges
+    end try
+    try
+        do shell script "echo '\n\nDeprecated login items at Startup:\n'" & quoted form of _fl & " >> " & dest
+    end try
+    
+    -- deprecated launchd.conf
+    set _fl to "None"
+    try
+        set _li to "~/.launchd.conf"
+        set _fl to do shell script "cat " & _li
+    end try
+    try
+        do shell script "echo '\n\nDeprecated user Launchd.conf files:\n'" & quoted form of _fl & " >> " & dest
+    end try
+    
+    -- crontabs
+    set _fl to "None"
+    try
+        set _fl to do shell script "crontab -l"
+    end try
+    try
+        do shell script "echo '\n\nUser crontab:\n'" & _fl & " >> " & dest
+    end try
+    
+    set _fl to "None"
+    try
+        set _fl to do shell script "crontab -l" with administrator privileges
+    end try
+    try
+        do shell script "echo '\n\nRoot crontab:\n'" & _fl & " >> " & dest
+    end try
+    
+    -- periodic
+    try
+        set _fl to do shell script "ls -al /etc/periodic/daily /etc/periodic/weekly /etc/periodic/monthly"
+    end try
+    try
+        do shell script "echo '\n\nPerodics:\n'" & _fl & " >> " & dest
+    end try
+    
+    -- rc.common
+    try
+        do shell script "echo '\n\nrc.common:' >> " & dest
+    end try
+    
+    try
+        do shell script "cat /etc/rc.common >> " & dest
+    end try
+    
+    -- at jobs
+    try
+        do shell script "echo '\n\n@jobs:' >> " & dest
+        set at_jobs to paragraphs of (do shell script "ls -a  /private/var/at/jobs")
+        if (count of at_jobs) is greater than 2 then
+            repeat with i from 3 to count of at_jobs
+                do shell script "echo " & quoted form of item i of at_jobs & ": >>" & dest
+                do shell script "cat /private/var/at/jobs/" & item i of at_jobs & " >>" & dest
+            end repeat
+        end if
+        on error
+        do shell script "echo '\n\nCould not complete at jobs fetch.' >> " & dest
+    end try
+    
+    -- emond
+    try
+        do shell script "echo '\n\nemond:' >> " & dest
+        set emondClients to paragraphs of (do shell script "ls -a /private/var/db/emondClients")
+        if (count of emondClients) is greater than 2 then
+            repeat with i from 3 to count of emondClients
+                do shell script "echo " & quoted form of item i of emondClients & ": >>" & dest
+                do shell script "cat /private/var/db/emondClients/" & item i of emondClients & " >>" & dest
+            end repeat
+        else
+            do shell script "echo '\n\temond service is not configured to run.' >> " & dest
+        end if
+        on error
+        do shell script "echo '\n\nCould not complete emond clients fetch.' >> " & dest
+    end try
+    
+    -- **********************
+    try
+        do shell script "echo '\n\nLogin Window (local):' >> " & dest
+    end try
+    
+    try
+        -- check for hidden users
+        do shell script "defaults read /Library/Preferences/com.apple.loginwindow >> " & dest
+    end try
+    
+    try
+        do shell script "echo '\n\nLogin Window (global):' >> " & dest
+    end try
+
+    try
+       do shell script "defaults read com.apple.loginwindow >> " & dest
+    end
+    
+    try
+        do shell script "echo '\n\nLogin Window (ttys):' >> " & dest
+    end try
+    
+    try
+        do shell script "cat /etc/ttys | grep loginwindow >> " & dest
+    end
+
+    try
+        do shell script "echo '\n\nDeleted Users:' >> " & dest
+    end try
+
+    try
+        -- check for deleted hidden users
+        do shell script "defaults read /Library/Preferences/com.apple.preferences.accounts >> " & dest
+    end try
+    
+    try
+        do shell script "echo '\n\nw:' >> " & dest
+    end try
+    
+    try
+        do shell script "w >> " & dest
+    end try
+    
+    try
+        do shell script "echo '\n\nwho:' >> " & dest
+    end try
+    
+    try
+        do shell script "echo 'User     ID' >> " & dest
+    end try
+    
+    try
+        do shell script "echo '" & gatherWho() & "' >> " & dest
+    end try
+    
+    try
+        do shell script "echo '\n\n' >> " & dest
+    end try
+    
+    try
+        do shell script "echo 'Last:' >> " & dest
+    end try
+    
+    try
+        do shell script "last >> " & dest
+    end try
+    
+    --storage
+    try
+        do shell script "system_profiler SPStorageDataType >> " & dest
+    end try
+    
+end gatherCurrentProcsForUser
+
+
+
+on gatherDetectXHistoryForUser(usr)
+    try
+        do shell script "ditto " & usr & "/Library/Application\\ Support/com.sqwarq.DetectX-Swift/History.plist " & usr & "/Desktop/Sqwarq_Support/DetectX_Swift_History.plist"
+        set end of my gathered to "gotChanges/"
+    end try
+    
+    try
+        do shell script "ditto -z -c " & usr & "/Library/Application\\ Support/com.sqwarq.DetectX-Swift/Runs/ " & usr & "/Desktop/Sqwarq_Support/Runs.cpgz"
+        set end of my gathered to "gotRuns/"
+    end try
+    
+    try
+        do shell script "ditto " & usr & "/Library/Application\\ Support/com.sqwarq.DetectX-Swift/Removed.txt " & usr & "/Desktop/Sqwarq_Support/Removed.txt"
+    end try
+    
+    try
+        do shell script "ditto " & usr & "/Library/Application\\ Support/com.sqwarq.DetectX-Swift/activity.log " & usr & "/Desktop/Sqwarq_Support/activity.log"
+    end try
+    
+end gatherDetectXHistoryForUser
+
+
+on gatheredBrowserDataForUser(usr)
+    
+    set browserPath to usr & "/Desktop/Sqwarq_Support/BrowserHistory.txt"
+    
+    try
+        do shell script "echo 'Safari:\n' >> " & browserPath
+    end try
+    
+    try
+        do shell script "plutil -p ~/Library/Safari/Downloads.plist | grep -vi bookmark >> " & browserPath
+    end try
+    
+    try
+        do shell script "sqlite3 ~/Library/Safari/History.db \"SELECT h.visit_time, i.url FROM history_visits h INNER JOIN history_items i ON h.history_item = i.id \" >> " & browserPath
+    end try
+    
+    try
+        do shell script "echo '\n\nPush notifications:\n' >> " & browserPath
+    end try
+    
+    try
+        do shell script "plutil -p ~/Library/Safari/UserNotificationPermissions.plist | grep -a3 '\"Permission\" => 1' >> " & browserPath
+    end try
+    
+    try
+        do shell script "plutil -p ~/Library/Safari/LastSession.plist | grep -iv sessionstate >> " & browserPath
+    end try
+    
+    -- Chrome
+    try
+        do shell script "echo '\n\n\nChrome:\n' >> " & browserPath
+    end try
+    
+    try
+        do shell script "sqlite3 /Library/Application\\ Support/Google/Chrome/Default/History \"SELECT datetime(((v.visit_time/1000000)-11644473600), 'unixepoch'), u.url FROM visits v INNER JOIN urls u ON u.id = v.url;\" >> " & browserPath
+    end try
+    
+    -- Firefox
+    
+    
+    -- Opera
+    
+    
+    -- Vivaldi
+    try
+        do shell script "echo '\n\n\nVivaldi:\n' >> " & browserPath
+    end try
+    
+    try
+        do shell script "sqlite3 /Library/Application\\ Support/Vivaldi/Default/History \"SELECT datetime(((v.visit_time/1000000)-11644473600), 'unixepoch'), u.url FROM visits v INNER JOIN urls u ON u.id = v.url;\" >> " & browserPath
+    end try
+    
+    set end of my gathered to "gotBrowser/"
+    
+end gatheredBrowserDataForUser
+
+
+
+on getDetectXVersion(usr)
+    set dtxv to 0
+    set osx to ""
+    try
+        tell application id "com.sqwarq.DetectX-Swift"
+            set dtxv to version
+            set end of my gathered to "gotVersion"
+        end tell
+    end try
+    try
+        set osx to (do shell script "sw_vers")
+    end try
+    
+    set theText to "DetectX Swift version " & dtxv & "\r" & "\r" & osx & "\r" & my gathered
+    try
+        do shell script "echo " & quoted form of theText & " > " & usr & "/Desktop/Sqwarq_Support/DetectX_Swift_version.txt"
+        
+    end try
+    
+end getDetectXVersion
+
+on getSysConfig(usr)
+    try
+        do shell script "ditto /Library/Preferences/SystemConfiguration/preferences.plist " & usr & "/Desktop/Sqwarq_Support/SystemConfiguration.plist"
+    end try
+end
+
+on getMailRulesScripts(usr)
+    -- get the v number
+    set veeNumber to "2"
+    try
+        repeat with i from 3 to 12
+            set theLib to homePath & "Library/Mail/V" & i
+            try
+                do shell script "cd " & theLib
+                set veeNumber to i
+            end try
+        end repeat
+    end try
+
+    try
+        do shell script "ditto '" & usr & "/Library/Mail/V" & veeNumber & "/MailData/SyncedRules.plist' " & usr & "/Desktop/Sqwarq_Support/SyncedRules.plist"
+    end try
+    try
+        do shell script "ditto '" & usr & "/Library/Mobile Documents/com~apple~mail/Data/MailData/ubiquitous_SyncedRules.plist' " & usr & "/Desktop/Sqwarq_Support/ubiquitous_SyncedRules.plist"
+    end try
+
+end getMailRulesScripts
+
+
+on gatherWho()
+    set userList to {}
+    set defaultUserList to {"daemon", "Guest", "nobody", "root"}
+    set f to paragraphs of (do shell script "dscl . -list /Users")
+    repeat with i from 1 to count of f
+        set this_item to item i of f
+        if this_item does not contain "_" then
+            if this_item is not in defaultUserList then
+                set this_item to this_item & tab & (do shell script "id -u " & this_item) as text
+                set end of userList to this_item & "\r"
+            end if
+        end if
+    end repeat
+    set r to userList as text
+    return r
+    
+end gatherWho
+
+
+###########################################################
+-->> COMMANDS
+###########################################################
+
+try
+    do shell script "mv " & homePath & "Desktop/Sqwarq_Support " & homePath & "Desktop/Sqwarq_Support" & (random number 100)
+end try
+
+-- no try, this needs to fail if it's going to fail
+do shell script "mkdir " & homePath & "Desktop/Sqwarq_Support"
+
+
+try
+    do shell script "lsappinfo list &> " & homePath & "Desktop/Sqwarq_Support/lsappinfo.txt &"
+end
+
+try
+    do shell script "lsof -i &> " & homePath & "Desktop/Sqwarq_Support/openPorts.txt &"
+end try
+
+try
+    do shell script "lsof &> " & homePath & "Desktop/Sqwarq_Support/openFiles.txt &"
+end try
+
+try
+    do shell script "defaults export com.sqwarq.DetectX-Swift " & homePath & "Desktop/Sqwarq_Support/DetectX_Swift_Preferences.plist"
+end try
+
+try
+    do shell script "cat /Library/Receipts/InstallHistory.plist > " & homePath & "Desktop/Sqwarq_Support/InstallHistory.plist &"
+end try
+
+
+-- packages
+try
+    try
+        do shell script "echo 'Installer package receipts and locations:'\necho\nx=$(pkgutil --pkgs | grep -v com.apple)\nfor i in $(echo $x | tr \";\" \"\n\")\ndo\n  l=$(pkgutil --pkg-info $i | grep -i location)\n  echo $i\n  echo \"$l\"\n  echo\ndone >" & homePath & "Desktop/Sqwarq_Support/Packages.txt"
+    end
+end try
+
+try
+do shell script "sqlite3 " & homePath & "Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'select LSQuarantineEventIdentifier, LSQuarantineAgentName, LSQuarantineAgentBundleIdentifier, LSQuarantineDataURLString, LSQuarantineSenderName, LSQuarantineSenderAddress, LSQuarantineOriginURLString, LSQuarantineTypeNumber, date(LSQuarantineTimeStamp + 978307200, \"unixepoch\") as downloadedDate from LSQuarantineEvent order by LSQuarantineTimeStamp' | sort | grep '|' --color > " & homePath & "Desktop/Sqwarq_Support/QuarantineEvents &"
+end try
+
+-- procs by kind
+try
+    set procDest to homePath & "Desktop/Sqwarq_Support/Processes_by_kind.txt"
+    repeat with i from 0 to 2
+        set thePred to (current application's NSPredicate's predicateWithFormat:"activationPolicy == %@ AND NOT (bundleIdentifier == NIL OR bundleIdentifier BEGINSWITH 'com.apple')" argumentArray:{i})
+        tell theBundleIDs to addObject:((theApps's filteredArrayUsingPredicate:thePred)'s valueForKey:"bundleIdentifier")
+    end repeat
+    
+    
+    set aMutableString to NSMutableString's new()
+    # set {nonAppleForeground, nonAppleMenubar, nonAppleBackground} to theBundleIDs as list
+    repeat with i from 1 to count of theBundleIDs
+        set anArray to item i of theBundleIDs
+        if i = 1 then
+            set theTitle to (NSString's stringWithString:"Foreground:
+            ")
+            else if i = 2 then
+            set theTitle to (NSString's stringWithString:"
+            
+            Statusbar:
+            ")
+            else
+            set theTitle to (NSString's stringWithString:"
+            
+            Background:
+            ")
+        end if
+        set this_string to (anArray's componentsJoinedByString:"
+        ")
+        (aMutableString's appendString:theTitle)
+        (aMutableString's appendString:this_string)
+    end repeat
+    (aMutableString's writeToFile:procDest atomically:true encoding:(current application's NSUTF8StringEncoding) |error|:(missing value))
+    
+end try
+
+try
+    its gatherCrashLogsForUser(homePath)
+    set end of gathered to "gotCrashes/"
+end try
+
+try
+    its gatherCurrentProcsForUser(homePath)
+end try
+
+try
+    its gatherDetectXHistoryForUser(homePath)
+end try
+
+try
+    its getSysConfig(homePath)
+end
+
+try
+    its getMailRulesScripts(homePath)
+end
+
+try
+    -- its gatheredBrowserDataForUser(homePath)
+end try
+
+try
+    its getDetectXVersion(homePath)
+    on error
+    display dialog "ERROR-1 NON FATAL" & "\r" & "\r" & "Please inform Sqwarq support that an ERROR-1 NON-FATAL status message occurred." & "\r" with icon 2 buttons "OK" default button "OK" with title "Sqwarq Support"
+end try
+
+
+set reportCount to (count of gathered) as text
+
+
+if reportCount is greater than 0 then
+    set theMsg to "In a few moments, a Sqwarq_Support folder will appear on your Desktop." & "\r" & "\r" & "Please right-click on the folder and choose 'Compress Sqwarq_Support'." & "\r" & "\r" & "Send the zipped archive to support@sqwarq.com." & "\r"
+    else
+    set theMsg to "ERROR-2 NON FATAL" & "\r" & "\r" & "There either were no log files or a problem was encountered trying to gather them." & "\r" & "\r" & "Please contact Sqwarq support describing any error messagess (including this one) you received." & "\r" & "\r"
+end if
+
+display dialog theMsg buttons "OK" default button "OK" with title "Sqwarq Support" with icon 1
+
+return "done"
+
+###########################################################
+#EOF

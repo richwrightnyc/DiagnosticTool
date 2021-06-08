@@ -1,0 +1,5 @@
+Although you can write to this folder and modify the scripts herein in situ, note that DetectX Swift reserves the right to overwrite this folder at a future date. 
+
+Copy the scripts to another location and modify your own copies to suit your needs.
+
+If you need to restore the example scripts to defaults or if you have deleted one or more of them, delete the entire 'Example Scripts' folder, then launch DetectX Swift. The app will re-create the Example Scripts folder with the default set of example scripts inside. 
