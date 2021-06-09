@@ -1321,7 +1321,7 @@ function MAIN {
 	
 	MALWARESCAN & # backgrounds this function and moves on
 
-# 	CAMERATEST
+	CAMERATEST
 
 	clear && echo -ne '----------------------------------[0%]\r'
 
@@ -1333,7 +1333,7 @@ function MAIN {
 		| awk '{print $4}'
 		)
 
-	echo "Diagnostic Tool v2.1 beta -- The Mac Support Store" \
+	echo "Diagnostic Tool v2.2 -- The Mac Support Store" \
 	> ~/Desktop/$serial.txt
 
 	echo >> ~/Desktop/$serial.txt
@@ -1497,7 +1497,7 @@ function MAIN {
 
 
 	# prompts user and runs sound test in background
-# 	SOUNDTEST &
+	SOUNDTEST &
 
 
 
@@ -1530,7 +1530,7 @@ function MAIN {
 
 
 	# opens drive dx and prompts user to save report
-# 	DRIVEDX &
+	DRIVEDX &
 
 
 
@@ -1621,6 +1621,7 @@ function MAIN {
 
 
 	# runs the system profiler to export data for aws
+	# currently not in use
 # 	OUTPUTSTART &
 
 
@@ -1817,7 +1818,7 @@ function MAIN {
 	
 	killall Photo\ Booth
 
-# 	hdiutil detach /Volumes/diagv2
+	hdiutil detach /Volumes/diagv2
 
 }
 
@@ -1827,7 +1828,7 @@ MAIN 2> /dev/null
 
 
 
-# killall Terminal
+killall Terminal
 
 
 
