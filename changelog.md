@@ -1,22 +1,22 @@
-Change-log:
+# Change-log:
 
 
-v2.2 - In progress - 6/7/21
-- commented out some of the functionality (output files, etc for testing purposes)
+# v2.2 - In progress - 6/7/21
+
+commented out some of the functionality (output files, etc for testing purposes)
 - working well for the most part in Catalina, Mojave, High Sierra
-- needs testing in Big Sur
-- need to create README
+- needs further testing in Big Sur
 
 
 
-v2.1 beta2 —update 5/24/21
-- improved functionality of network information printing
-    - conditional logic dependent on active network interface
+# v2.1 beta2 —update 5/24/21
+improved functionality of network information printing
+- conditional logic dependent on active network interface
     - support on Mac Pro needs further testing
         - there’s still some issues with network configuration info
         - it may be too variable between different machines to depend on it working 100% of the time
 - fixed display type blank printing
-    - will determine if the display type is a TV, or print nothing if not available
+    - will determine if display type is a TV, or print nothing
 - fixed bluetooth version printing
 - added the product description back from the original diag script
     - issues with this
@@ -25,85 +25,88 @@ v2.1 beta2 —update 5/24/21
 - tested the script on an M1 MBA running 11.2
 
 
-v2.1 beta2 — 5/18/21
-- Version compatibility issues resolved
-    - Fixed some more blank prints on legacy versions
-    - Better functionality in network info printing
-        - Still needs a bit of work, its not very dynamic
+# v2.1 beta2 — 5/18/21
+Version compatibility issues resolved
+- Fixed some more blank prints on legacy versions
+- Better functionality in network info printing
+    - Still needs a bit of work, its not very dynamic
         - Think I broke IPv4 info
         - Need to make this conditional
 
 
 
-v2.1 beta — 5/17/21
-- Squashed some bugs
-    - blank spaces (still more to go)
-    - Double prints (probably more I haven’t thought of yet)
-    - Shutdown log not running sometimes
-    - Malware scan not running sometimes
-    - 
-- Added support for
-    - Json output in macOS Catalina
-        - Need to add logic for Big Sur and test it
-    - Xml output in legacy versions of macOS
-        - Needs testing
-- Future versions
-    - Going to need to include separate functions for legacy compatibility 
-    - Will include logic that does something with the outFiles (json output)
-    - Will include a python module to parse xml output and convert it to csv
-    - Progress bar cleanup
-        - Needs more steps so it looks more realistic
-        - Adding description of progress for the bored user to read
-    - Background heavier functions to make better use of parallel processing
-        - User directory usage (du is kind of heavy)
-        - I imagine disk usage will be more expensive on rotational mediums
+# v2.1 beta — 5/17/21
+Squashed some bugs
+- blank spaces (still more to go)
+- Double prints (probably more I haven’t thought of yet)
+- Shutdown log not running sometimes
+- Malware scan not running sometimes
+
+Added support for
+- Json output in macOS Catalina
+    - Need to add logic for Big Sur and test it
+- Xml output in legacy versions of macOS
+    - Needs testing
+
+Future versions
+- Going to need to include separate functions for legacy compatibility 
+- Will include logic that does something with the outFiles (json output)
+- Will include a python module to parse xml output and convert it to csv
+- Progress bar cleanup
+    - Needs more steps so it looks more realistic
+    - Adding description of progress for the bored user to read
+- Background heavier functions to make better use of parallel processing
+    - User directory usage (du is kind of heavy)
+    - I imagine disk usage will be more expensive on rotational mediums
 
 
 
-v2.1 alpha — 5/10/21
-- Complete overhaul of the code
-    - Dependent functions are now properly functional-ized
-        - Use local variables and global where appropriate
-    - Error output is suppressed from within rather than from without
-    - Functions to evaluate proper course for the program to run
-        - These depend on multiple evaluations at different points to determine which path to completion should be followed
-    - Functions fork off of main where appropriate
-    - Wider compatibility achieved through variable functions for different machines
-    - Added notifications for the end user as the program progresses
-- Support now added for:
-    - Upgradeable memory
-    - Metal-capable graphics
-    - Proper display type & resolution printing
-    - Properly handled dual graphics MacBooks
-    - Properly handled dual graphics in Mac Pro 6,1
-    - AC Charger information
-    - Properly handled IPv6 configurations
-    - Filesystem info, ownership, device name, dev node, and attachment protocol
-    - FileVault status printing
-- Running on:
-    - MacBooks (13 inch & smaller models)
-    - MacBooks (15/16 inch & dual graphics models)
-    - iMac
-    - Mac Pro 5,1 (and possibly earlier)
-    - Mac Pro 6,1 (dual graphics models included)
-- Need to re-introduce external functions now:
-    - SMART stats??
-        - Going to run these in the background
-            - These will output to /tmp so the end user will never see them
-            - These will run in parallel so that the program will be more efficient
+# v2.1 alpha — 5/10/21
+Complete overhaul of the code
+- Dependent functions are now properly functional-ized
+    - Use local variables and global where appropriate
+- Error output is suppressed from within rather than from without
+- Functions to evaluate proper course for the program to run
+    - These depend on multiple evaluations at different points to determine which path to completion should be followed
+- Functions fork off of main where appropriate
+- Wider compatibility achieved through variable functions for different machines
+- Added notifications for the end user as the program progresses
+
+Support now added for:
+- Upgradeable memory
+- Metal-capable graphics
+- Proper display type & resolution printing
+- Properly handled dual graphics MacBooks
+- Properly handled dual graphics in Mac Pro 6,1
+- AC Charger information
+- Properly handled IPv6 configurations
+- Filesystem info, ownership, device name, dev node, and attachment protocol
+- FileVault status printing
+
+Running on:
+- MacBooks (13 inch & smaller models)
+- MacBooks (15/16 inch & dual graphics models)
+- iMac
+- Mac Pro 5,1 (and possibly earlier)
+- Mac Pro 6,1 (dual graphics models included)
+
+Need to re-introduce external functions now:
+- SMART stats??
+    - Going to run these in the background
+        - These will output to /tmp so the end user will never see them
+        - These will run in parallel so that the program will be more efficient
         - The program will not exit before all of the external functions have been completed
-            - The external functions will concatenate to the final report upon completion of main
+        - The external functions will concatenate to the final report upon completion of main
 
 
-v2.0.4b — 5/6/21
-- Working on adding desktop functionality
-    - Conditional functions for desktop-related functions
+# v2.0.4b — 5/6/21
+Working on adding desktop functionality
+- Conditional functions for desktop-related functions
 - Fixed conditional for laptops with discreet graphics
-    - 
 
 
 
-v2.0.4a — 5/4/21
+# v2.0.4a — 5/4/21
 - Added SPD memory bank info
     - Prints individual banks as well as the total ram installed like before
 - Piped the shutdown log output so that its less verbose
@@ -115,7 +118,7 @@ v2.0.4a — 5/4/21
 
 
 
-v2.0.4a — 5/3/21
+# v2.0.4a — 5/3/21
 - Re-organized code so that it makes more sense
     - Variables come right before their dependent functions now
 - Backgrounding log function, assigning its PID to $pid
@@ -132,14 +135,14 @@ v2.0.4a — 5/3/21
 
 
 
-v2.0.4 — 4/23/21
+# v2.0.4 — 4/23/21
 - Added conditional statement for fsck logs
     - Will print apfs or hfs log dependent on disk0s2’s type
 - Added ./jsonProfiler to run in the background at the beginning of script
 
 
 
-v2.0.4 — 4/22/21
+# v2.0.4 — 4/22/21
 - State of affairs
     - Formatting seems to be holding up well 
         - Need to see how well it holds up across different versions of macOS
