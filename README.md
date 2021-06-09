@@ -1,6 +1,6 @@
 # DiagnosticTool
 
-written for The Mac Support Store by Rich Wright
+A bash tool written to generate a report on a host machine, designed to assist in Mac diagnostics. Written for The Mac Support Store by Rich Wright.
 
 # Scope
 This tool is intended to help automate Macintosh diagnostics. It relies heavily on system_profiler to pull relevent information about the host machine and generates a report with this information. See the sampleOutput.txt file in the main branch for a better understanding of what it does. Eventually the goal is to port this to Swift, and compile it into a full scale application.
