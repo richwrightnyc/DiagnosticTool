@@ -21,3 +21,12 @@ macOS Big Sur
 Legacy versions of macOS/OS X
 - the information system_profiler provides varies between software versions, so not every output will work on every software version
 - I've gone to great length to ensure that most of the important information is printed across various machines, but most of my focus has been on later/current versions of macOS
+
+
+# Thanks to
+
+krypted for swiftwarrantylookup, find it here: https://github.com/krypted/swiftwarrantylookup
+
+Binary Fruit for DriveDx, find it here: https://binaryfruit.com/drivedx
+
+Sqwarq for DetectX Swift, find it here: https://sqwarq.com/detectx/
