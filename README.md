@@ -3,7 +3,7 @@
 A bash tool written to generate a report on a host machine, designed to assist in Mac diagnostics. Written for The Mac Support Store by Rich Wright.
 
 # Scope
-This tool is intended to help automate Macintosh diagnostics. It relies heavily on system_profiler to pull relevent information about the host machine and generates a report with this information. See the sampleOutput.txt file in the main branch for a better understanding of what it does. Eventually the goal is to port this to Swift, and compile it into a full scale application.
+This tool is intended to help automate Macintosh diagnostics. It relies heavily on system_profiler to pull relevent information about the host machine and generates a report with this information. See the sampleOutput.txt file in the main branch for a better understanding of what it does. Eventually the goal is to port this to Swift, and compile it into a full scale application with additional functionality.
 
 # Use Case
 Can be run locally or remotely. Either clone the repo or download the disk image (.dmg file), attach it & run the binary executable. There may be issues on later versions of macOS with permissions, mainly that some of the external functions may need to be run separately from the program. Find them in the hidden ".Resources" folder on the disk image. The disk image contains everything needed for the program to function, all of the contents are included in this repo for transparency.
