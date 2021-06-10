@@ -1073,7 +1073,7 @@ function MALWARESCAN {
 # contains instructions for extracting previous 72 hours of shutdown cause logs
 function SHUTDOWNLOG {
 
-	log show --predicate 'eventMessage contains "Previous shutdown cause"' --last 21d --style compact \
+	log show --predicate 'eventMessage contains "Previous shutdown cause"' --last 14d --style compact \
 	| awk '{print $1,$2,$7,$8,$9}' > "/tmp/mssfiles/shutdownlog.txt" &
 
 	echo $! > /tmp/mssfiles/shutdownlogpid.txt
@@ -1127,181 +1127,181 @@ function DRIVEDX {
 }
 
 # contains instructions that determine which output should run, based on macOS version
-function OUTPUTSTART {
-
-	local swVers=$(
-		system_profiler SPSoftwareDataType \
-		| grep "System Version:" \
-		| awk '{print $4}'
-		)
-
-
-	mkdir ~/Desktop/outFiles
-
-
-	case $swVers in
-	
-		11.*.*)
-		
-			JSONOUTPUT 2> /dev/null
-			
-			;;
-	
-		10.15.*)
-		
-			JSONOUTPUT 2> /dev/null
-		
-			;;
-	
-		*) 
-		
-			XMLOUTPUT 2> /dev/null
-		
-			;;
-	
-	esac
-
-	osascript -e 'tell app "Terminal" to display notification "Exporting your system profile....." with title "Diagnostic Tool v2.2 - The Mac Support Store"'
-
-}
-
+# function OUTPUTSTART {
+# 
+# 	local swVers=$(
+# 		system_profiler SPSoftwareDataType \
+# 		| grep "System Version:" \
+# 		| awk '{print $4}'
+# 		)
+# 
+# 
+# 	mkdir ~/Desktop/outFiles
+# 
+# 
+# 	case $swVers in
+# 	
+# 		11.*.*)
+# 		
+# 			JSONOUTPUT 2> /dev/null
+# 			
+# 			;;
+# 	
+# 		10.15.*)
+# 		
+# 			JSONOUTPUT 2> /dev/null
+# 		
+# 			;;
+# 	
+# 		*) 
+# 		
+# 			XMLOUTPUT 2> /dev/null
+# 		
+# 			;;
+# 	
+# 	esac
+# 
+# 	osascript -e 'tell app "Terminal" to display notification "Exporting your system profile....." with title "Diagnostic Tool v2.2 - The Mac Support Store"'
+# 
+# }
+# 
 # contains instructions for exporting system profile in json format, macOS Catalina and up ONLY
-function JSONOUTPUT {
-
-	system_profiler -json SPHardwareDataType > ~/Desktop/outFiles/hardware.json
-	
-	system_profiler -json SPSoftwareDataType > ~/Desktop/outFiles/software.json
-	
-	system_profiler -json SPAudioDataType > ~/Desktop/outFiles/audio.json
-	
-	system_profiler -json SPBluetoothDataType > ~/Desktop/outFiles/bluetooth.json
-	
-	system_profiler -json SPCameraDataType > ~/Desktop/outFiles/camera.json
-	
-	system_profiler -json SPCardReaderDataType > ~/Desktop/outFiles/cardReader.json
-	
-	system_profiler -json iBridgeDataType > ~/Desktop/outFiles/ibridge.json
-	
-	system_profiler -json SPDiagnosticsDataType > ~/Desktop/outFiles/diagnostics.json
-	
-	system_profiler -json SPDisabledSoftwareDataType > ~/Desktop/outFiles/disabledSW.json
-	
-	system_profiler -json SPDiscBurningDataType > ~/Desktop/outFiles/discBurn.json
-	
-	system_profiler -json SPFibreChannelDataType > ~/Desktop/outFiles/fibreChannel.json
-	
-	system_profiler -json SPFireWireDataType > ~/Desktop/outFiles/firewire.json
-	
-	system_profiler -json SPFirewallDataType > ~/Desktop/outFiles/firewall.json
-	
-	system_profiler -json SPFrameworksDataType > ~/Desktop/outFiles/frameworks.json
-	
-	system_profiler -json SPDisplaysDataType > ~/Desktop/outFiles/displays.json
-	
-	system_profiler -json SPInstallHistoryDataType > ~/Desktop/outFiles/installHistory.json
-	
-	system_profiler -json SPInternationalDataType > ~/Desktop/outFiles/intl.json
-	
-	system_profiler -json SPNetworkLocationsDataType > ~/Desktop/outFiles/locations.json
-	
-	system_profiler -json SPManagedClientDataType > ~/Desktop/outFiles/profiles.json
-	
-	system_profiler -json SPMemoryDataType > ~/Desktop/outFiles/memory.json
-	
-	system_profiler -json SPNVMeDataType > ~/Desktop/outFiles/nvme.json
-	
-	system_profiler -json SPNetworkDataType > ~/Desktop/outFiles/network.json
-	
-	system_profiler -json SPPCIDataType > ~/Desktop/outFiles/pci.json
-	
-	system_profiler -json SPPowerDataType > ~/Desktop/outFiles/power.json
-	
-	system_profiler -json SPPrintersDataType > ~/Desktop/outFiles/printers.json
-	
-	system_profiler -json SPSerialATADataType > ~/Desktop/outFiles/sata.json
-	
-	system_profiler -json SPSmartCardsDataType > ~/Desktop/outFiles/smartCard.json
-	
-	system_profiler -json SPStartupItemDataType > ~/Desktop/outFiles/startupItems.json
-	
-	system_profiler -json SPStorageDataType > ~/Desktop/outFiles/storage.json
-	
-	system_profiler -json SPThunderboltDataType > ~/Desktop/outFiles/thunderbolt.json
-	
-	system_profiler -json SPUSBDataType > ~/Desktop/outFiles/usb.json
-	
-	system_profiler -json SPAirPortDataType > ~/Desktop/outFiles/airport.json
-
-}
-
+# function JSONOUTPUT {
+# 
+# 	system_profiler -json SPHardwareDataType > ~/Desktop/outFiles/hardware.json
+# 	
+# 	system_profiler -json SPSoftwareDataType > ~/Desktop/outFiles/software.json
+# 	
+# 	system_profiler -json SPAudioDataType > ~/Desktop/outFiles/audio.json
+# 	
+# 	system_profiler -json SPBluetoothDataType > ~/Desktop/outFiles/bluetooth.json
+# 	
+# 	system_profiler -json SPCameraDataType > ~/Desktop/outFiles/camera.json
+# 	
+# 	system_profiler -json SPCardReaderDataType > ~/Desktop/outFiles/cardReader.json
+# 	
+# 	system_profiler -json iBridgeDataType > ~/Desktop/outFiles/ibridge.json
+# 	
+# 	system_profiler -json SPDiagnosticsDataType > ~/Desktop/outFiles/diagnostics.json
+# 	
+# 	system_profiler -json SPDisabledSoftwareDataType > ~/Desktop/outFiles/disabledSW.json
+# 	
+# 	system_profiler -json SPDiscBurningDataType > ~/Desktop/outFiles/discBurn.json
+# 	
+# 	system_profiler -json SPFibreChannelDataType > ~/Desktop/outFiles/fibreChannel.json
+# 	
+# 	system_profiler -json SPFireWireDataType > ~/Desktop/outFiles/firewire.json
+# 	
+# 	system_profiler -json SPFirewallDataType > ~/Desktop/outFiles/firewall.json
+# 	
+# 	system_profiler -json SPFrameworksDataType > ~/Desktop/outFiles/frameworks.json
+# 	
+# 	system_profiler -json SPDisplaysDataType > ~/Desktop/outFiles/displays.json
+# 	
+# 	system_profiler -json SPInstallHistoryDataType > ~/Desktop/outFiles/installHistory.json
+# 	
+# 	system_profiler -json SPInternationalDataType > ~/Desktop/outFiles/intl.json
+# 	
+# 	system_profiler -json SPNetworkLocationsDataType > ~/Desktop/outFiles/locations.json
+# 	
+# 	system_profiler -json SPManagedClientDataType > ~/Desktop/outFiles/profiles.json
+# 	
+# 	system_profiler -json SPMemoryDataType > ~/Desktop/outFiles/memory.json
+# 	
+# 	system_profiler -json SPNVMeDataType > ~/Desktop/outFiles/nvme.json
+# 	
+# 	system_profiler -json SPNetworkDataType > ~/Desktop/outFiles/network.json
+# 	
+# 	system_profiler -json SPPCIDataType > ~/Desktop/outFiles/pci.json
+# 	
+# 	system_profiler -json SPPowerDataType > ~/Desktop/outFiles/power.json
+# 	
+# 	system_profiler -json SPPrintersDataType > ~/Desktop/outFiles/printers.json
+# 	
+# 	system_profiler -json SPSerialATADataType > ~/Desktop/outFiles/sata.json
+# 	
+# 	system_profiler -json SPSmartCardsDataType > ~/Desktop/outFiles/smartCard.json
+# 	
+# 	system_profiler -json SPStartupItemDataType > ~/Desktop/outFiles/startupItems.json
+# 	
+# 	system_profiler -json SPStorageDataType > ~/Desktop/outFiles/storage.json
+# 	
+# 	system_profiler -json SPThunderboltDataType > ~/Desktop/outFiles/thunderbolt.json
+# 	
+# 	system_profiler -json SPUSBDataType > ~/Desktop/outFiles/usb.json
+# 	
+# 	system_profiler -json SPAirPortDataType > ~/Desktop/outFiles/airport.json
+# 
+# }
+# 
 # contains instructions for exporting system profile in xml format, for macOS Mojave and earlier ONLY
-function XMLOUTPUT {
-
-	system_profiler -xml SPHardwareDataType > ~/Desktop/outFiles/hardware.xml
-	
-	system_profiler -xml SPSoftwareDataType > ~/Desktop/outFiles/software.xml
-	
-	system_profiler -xml SPAudioDataType > ~/Desktop/outFiles/audio.xml
-	
-	system_profiler -xml SPBluetoothDataType > ~/Desktop/outFiles/bluetooth.xml
-	
-	system_profiler -xml SPCameraDataType > ~/Desktop/outFiles/camera.xml
-	
-	system_profiler -xml SPCardReaderDataType > ~/Desktop/outFiles/cardReader.xml
-	
-	system_profiler -xml iBridgeDataType > ~/Desktop/outFiles/ibridge.xml
-	
-	system_profiler -xml SPDiagnosticsDataType > ~/Desktop/outFiles/diagnostics.xml
-	
-	system_profiler -xml SPDisabledSoftwareDataType > ~/Desktop/outFiles/disabledSW.xml
-	
-	system_profiler -xml SPDiscBurningDataType > ~/Desktop/outFiles/discBurn.xml
-	
-	system_profiler -xml SPFibreChannelDataType > ~/Desktop/outFiles/fibreChannel.xml
-	
-	system_profiler -xml SPFireWireDataType > ~/Desktop/outFiles/firewire.xml
-	
-	system_profiler -xml SPFirewallDataType > ~/Desktop/outFiles/firewall.xml
-	
-	system_profiler -xml SPFrameworksDataType > ~/Desktop/outFiles/frameworks.xml
-	
-	system_profiler -xml SPDisplaysDataType > ~/Desktop/outFiles/displays.xml
-	
-	system_profiler -xml SPInstallHistoryDataType > ~/Desktop/outFiles/installHistory.xml
-	
-	system_profiler -xml SPInternationalDataType > ~/Desktop/outFiles/intl.xml
-	
-	system_profiler -xml SPNetworkLocationsDataType > ~/Desktop/outFiles/locations.xml
-	
-	system_profiler -xml SPManagedClientDataType > ~/Desktop/outFiles/profiles.xml
-	
-	system_profiler -xml SPMemoryDataType > ~/Desktop/outFiles/memory.xml
-	
-	system_profiler -xml SPNVMeDataType > ~/Desktop/outFiles/nvme.xml
-	
-	system_profiler -xml SPNetworkDataType > ~/Desktop/outFiles/network.xml
-	
-	system_profiler -xml SPPCIDataType > ~/Desktop/outFiles/pci.xml
-	
-	system_profiler -xml SPPowerDataType > ~/Desktop/outFiles/power.xml
-	
-	system_profiler -xml SPPrintersDataType > ~/Desktop/outFiles/printers.xml
-	
-	system_profiler -xml SPSerialATADataType > ~/Desktop/outFiles/sata.xml
-	
-	system_profiler -xml SPSmartCardsDataType > ~/Desktop/outFiles/smartCard.xml
-	
-	system_profiler -xml SPStartupItemDataType > ~/Desktop/outFiles/startupItems.xml
-	
-	system_profiler -xml SPStorageDataType > ~/Desktop/outFiles/storage.xml
-	
-	system_profiler -xml SPThunderboltDataType > ~/Desktop/outFiles/thunderbolt.xml
-	
-	system_profiler -xml SPUSBDataType > ~/Desktop/outFiles/usb.xml
-	
-	system_profiler -xml SPAirPortDataType > ~/Desktop/outFiles/airport.xml
-	
-}
+# function XMLOUTPUT {
+# 
+# 	system_profiler -xml SPHardwareDataType > ~/Desktop/outFiles/hardware.xml
+# 	
+# 	system_profiler -xml SPSoftwareDataType > ~/Desktop/outFiles/software.xml
+# 	
+# 	system_profiler -xml SPAudioDataType > ~/Desktop/outFiles/audio.xml
+# 	
+# 	system_profiler -xml SPBluetoothDataType > ~/Desktop/outFiles/bluetooth.xml
+# 	
+# 	system_profiler -xml SPCameraDataType > ~/Desktop/outFiles/camera.xml
+# 	
+# 	system_profiler -xml SPCardReaderDataType > ~/Desktop/outFiles/cardReader.xml
+# 	
+# 	system_profiler -xml iBridgeDataType > ~/Desktop/outFiles/ibridge.xml
+# 	
+# 	system_profiler -xml SPDiagnosticsDataType > ~/Desktop/outFiles/diagnostics.xml
+# 	
+# 	system_profiler -xml SPDisabledSoftwareDataType > ~/Desktop/outFiles/disabledSW.xml
+# 	
+# 	system_profiler -xml SPDiscBurningDataType > ~/Desktop/outFiles/discBurn.xml
+# 	
+# 	system_profiler -xml SPFibreChannelDataType > ~/Desktop/outFiles/fibreChannel.xml
+# 	
+# 	system_profiler -xml SPFireWireDataType > ~/Desktop/outFiles/firewire.xml
+# 	
+# 	system_profiler -xml SPFirewallDataType > ~/Desktop/outFiles/firewall.xml
+# 	
+# 	system_profiler -xml SPFrameworksDataType > ~/Desktop/outFiles/frameworks.xml
+# 	
+# 	system_profiler -xml SPDisplaysDataType > ~/Desktop/outFiles/displays.xml
+# 	
+# 	system_profiler -xml SPInstallHistoryDataType > ~/Desktop/outFiles/installHistory.xml
+# 	
+# 	system_profiler -xml SPInternationalDataType > ~/Desktop/outFiles/intl.xml
+# 	
+# 	system_profiler -xml SPNetworkLocationsDataType > ~/Desktop/outFiles/locations.xml
+# 	
+# 	system_profiler -xml SPManagedClientDataType > ~/Desktop/outFiles/profiles.xml
+# 	
+# 	system_profiler -xml SPMemoryDataType > ~/Desktop/outFiles/memory.xml
+# 	
+# 	system_profiler -xml SPNVMeDataType > ~/Desktop/outFiles/nvme.xml
+# 	
+# 	system_profiler -xml SPNetworkDataType > ~/Desktop/outFiles/network.xml
+# 	
+# 	system_profiler -xml SPPCIDataType > ~/Desktop/outFiles/pci.xml
+# 	
+# 	system_profiler -xml SPPowerDataType > ~/Desktop/outFiles/power.xml
+# 	
+# 	system_profiler -xml SPPrintersDataType > ~/Desktop/outFiles/printers.xml
+# 	
+# 	system_profiler -xml SPSerialATADataType > ~/Desktop/outFiles/sata.xml
+# 	
+# 	system_profiler -xml SPSmartCardsDataType > ~/Desktop/outFiles/smartCard.xml
+# 	
+# 	system_profiler -xml SPStartupItemDataType > ~/Desktop/outFiles/startupItems.xml
+# 	
+# 	system_profiler -xml SPStorageDataType > ~/Desktop/outFiles/storage.xml
+# 	
+# 	system_profiler -xml SPThunderboltDataType > ~/Desktop/outFiles/thunderbolt.xml
+# 	
+# 	system_profiler -xml SPUSBDataType > ~/Desktop/outFiles/usb.xml
+# 	
+# 	system_profiler -xml SPAirPortDataType > ~/Desktop/outFiles/airport.xml
+# 	
+# }
 
 
 
@@ -1622,7 +1622,7 @@ function MAIN {
 
 	# runs the system profiler to export data for aws
 	# currently not in use
-# 	OUTPUTSTART &
+	# OUTPUTSTART &
 
 
 
@@ -1785,7 +1785,8 @@ function MAIN {
 	cat "/tmp/mssfiles/malwarescan.txt" >> ~/Desktop/$serial.txt
 
 
-# 	wait OUTPUTFILES
+	# currently not in use
+	# wait OUTPUTFILES
 
 
 	clear && echo -ne '#############################-----[85%]\r'
