@@ -1,12 +1,13 @@
-Diagnostic Tool v2.2 -- The Mac Support Store
+Diagnostic Tool -- The Mac Support Store
 
 ----------------
 System Profile:
 Mac Model: MacBook Pro (16-inch, 2019)
 Model Identifier: MacBookPro16,1
-Serial Number: ############
-Software Version: macOS 10.15.7 (19H1030)
-Boot ROM Version: 1554.100.64.0.0 (iBridge: 18.16.14556.0.0,0) 
+Serial Number: A1B2C3D4E5F6
+Software Version: macOS 10.15.7 (19H1217)
+Boot ROM Version: 1554.120.19.0.0 (iBridge: 18.16.14663.0.0,0) 
+Boot Mode: Normal
 System Integrity Protection status: disabled.
 FileVault: FileVault is On.
 ----------------
@@ -39,7 +40,7 @@ Part Number: -
 ECC: Disabled
 Upgradeable Memory: No
 Total RAM Installed: 32 GB
-Swap Usage: total = 0.00M used = 0.00M free = 0.00M (encrypted)
+Swap Usage: total = 3072.00M used = 2195.75M free = 876.25M (encrypted)
 ----------------
 Graphics & Displays:
 Integrated Graphics: Intel UHD Graphics 630 1536 MB
@@ -52,38 +53,38 @@ Framebuffer Depth: 30-Bit Color (ARGB2101010)
 Power Info:
 Battery Installed: Yes
 Battery Condition: Normal 
-Battery Cycle Count: 126
-Full Charge Capacity: 8269
-Charge Remaining: 7119
-Amperage (mA): -791
-Voltage (mV): 12208
+Battery Cycle Count: 127
+Full Charge Capacity (mAh): 8298
+Battery Charge Remaining (mAh): 7436
+Battery Amperage (mA): -972
+Battery Voltage (mV): 12313
 AC Charger Connected: No
 ----------------
 Wireless Statistics:
-     agrCtlRSSI: -49
+     agrCtlRSSI: -45
      agrExtRSSI: 0
-    agrCtlNoise: -101
+    agrCtlNoise: -95
     agrExtNoise: 0
-          state: running
+          state: scanning
         op mode: station 
-     lastTxRate: 216
-        maxRate: 217
+     lastTxRate: 450
+        maxRate: 450
 lastAssocStatus: 0
     802.11 auth: open
       link auth: wpa2-psk
-          BSSID: ##:##:##:##:##:##
-           SSID: ############
+          BSSID: 00:11:22:aa:bb:cc
+           SSID: Your Network Name
             MCS: 0
-        channel: 1
+        channel: 161,-1
 ----------------
 Network Info:
 Active Interface: en0
 Interface Type: AirPort
 Configuration Method: DHCP
-IPv4 Address: 192.168.###.###
-Subnet Mask: 255.255.255.0
-Router: 192.168.###.###
-MAC Address: ##:##:##:##:##:##
+IPv4 Address: 255.255.255.255
+Subnet Mask: 255.255.255.255
+Router: 0.0.0.0
+MAC Address: 1a:2b:3c:4d:5e:6f
 IPv6 Configuration Method: Automatic
 IPv6 Address: none
 ----------------
@@ -94,8 +95,8 @@ Power: On
 Discovery: Off
 Handoff Supported: Yes
 Auto Seek Keyboard: On
-Hostname: ###################   
-MAC Address: ##-##-##-##-##-##
+Hostname: localhost   
+MAC Address: 00-00-00-AA-BB-CC
 ----------------
 Disk Overview:
 Storage Medium: SSD
@@ -107,16 +108,16 @@ Device Name: APPLE SSD AP1024N
 Protocol: PCI-Express 
 Internal: Yes
 Mounted                  Used      Avail     Capacity  
-/System/Volumes/Data     730G      257G      74%       
+/System/Volumes/Data     696G      288G      71%       
 ----------------
 Home Folder Usage:
 8.5M	Applications (Parallels)
 7.2M	Bash-Snippets
-451M	Code
+577M	Code
 2.0M	Creative Cloud Files
-104M	Desktop
+109M	Desktop
  74G	Documents
-113G	Downloads
+ 96G	Downloads
 135G	Library
  12G	Movies
  22M	Music
@@ -128,11 +129,11 @@ Home Folder Usage:
 1.1M	mu_code
 146M	wordlists
 212K	xcode
-564G	total
+548G	total
 ----------------
 Malware Scan:
 DetectX Swift 1.0971
-2021-06-09T13:19:36-0400
+2021-06-11T23:14:13-0400
 Spotlight indexing: Enabled
 Searching...
 
@@ -140,9 +141,6 @@ Nothing found.
 ----------------
 Previous Shutdown Log Summary:
 Timestamp Ty   
-2021-06-01 10:48:11.093 shutdown cause: 5
-2021-06-01 16:45:05.525 shutdown cause: 5
-2021-06-02 00:47:59.474 shutdown cause: 5
 2021-06-04 09:31:26.335 shutdown cause: 5
 2021-06-04 10:19:41.432 shutdown cause: 5
 2021-06-04 11:13:15.604 shutdown cause: 5
@@ -153,3 +151,11 @@ Timestamp Ty
 2021-06-07 11:28:58.626 shutdown cause: 5
 2021-06-08 11:12:41.511 shutdown cause: 5
 2021-06-08 20:30:03.378 shutdown cause: 1
+2021-06-10 11:15:05.302 shutdown cause: 5
+2021-06-10 15:11:20.514 shutdown cause: 1
+2021-06-11 06:15:21.090 shutdown cause: 5
+2021-06-11 08:15:39.323 shutdown cause: 5
+2021-06-11 09:17:54.239 shutdown cause: 5
+2021-06-11 11:15:41.245 shutdown cause: 5
+2021-06-11 22:47:37.038 shutdown cause: 5
+2021-06-11 22:58:47.869 shutdown cause: 5
