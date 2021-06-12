@@ -1,11 +1,21 @@
 # Change-log:
 
+# v2.2 - In progress - 6/11/21
 
-# v2.2 - In progress - 6/7/21
+bug fixes - big sur
+- graphics info section reporting "Metal: Not Supported" incorrectly
+    - system_profiler does not include this section since it will only run on metal-supported graphics natively
+    - introduced nested if statements to evaulate software version if that section is not found, needs further testing
+- battery info section
+    - added conditionals to fix blank prints, tested on 16-inch mbp
 
-commented out some of the functionality (output files, etc for testing purposes)
-- working well for the most part in Catalina, Mojave, High Sierra
-- needs further testing in Big Sur
+changes
+- scaled down shutdown log to parse only 10 days instead of 14
+    - still trying to find a good balance between collecting enough data and how long it takes to return data
+- added boot mode printing in the system overview section
+    - seems to be working but needs further testing for version compatibility
+- removed version numbers from the notifications
+- cleaned up the osascript prompts and their buttons
 
 
 

@@ -207,10 +207,49 @@ function DESKTOPGRAPHICSINFO(){
 		| awk '{print $2}'
 		)
 
-	if [ "$metal" == "Supported," ]
-		then echo "Metal: Supported" >> ~/Desktop/$serial.txt
-		else echo "Metal: Not Supported" >> ~/Desktop/$serial.txt
+# 	if [ "$metal" == "Supported," ]
+# 		then echo "Metal: Supported" >> ~/Desktop/$serial.txt
+# 		else echo "Metal: Not Supported" >> ~/Desktop/$serial.txt
+# 	fi
+
+
+
+
+	# new version
+	if [ "$metal" = "Supported," ]
+
+		then
+	
+			echo "Metal: Supported" >> ~/Desktop/$serial.txt
+	
+	elif [ "$macOS" = 11.* ]
+
+		then
+	
+			echo "Metal: Supported" >> ~/Desktop/$serial.txt
+
+	else
+		
+		if test -z "$metal"
+	
+			then
+			
+				if [ "$macOS" = 11.* ]
+			
+					then
+					
+						echo "Metal: Supported" >> ~/Desktop/$serial.txt
+					
+				fi
+	
+		else
+	
+			echo "Metal: Not Supported" >> ~/Desktop/$serial.txt
+		
+		fi
+	
 	fi
+
 
 
 
@@ -338,10 +377,54 @@ function MACPROGRAPHICSINFO(){
 		)
 
 
-	if [ "$metal" == "Supported," ]
-		then echo "Metal: Supported" >> ~/Desktop/$serial.txt
-		else echo "Metal: Not Supported" >> ~/Desktop/$serial.txt
+# 	if [ "$metal" == "Supported," ]
+# 		then echo "Metal: Supported" >> ~/Desktop/$serial.txt
+# 		else echo "Metal: Not Supported" >> ~/Desktop/$serial.txt
+# 	fi
+
+
+
+
+	# new version
+	if [ "$metal" = "Supported," ]
+
+		then
+	
+			echo "Metal: Supported" >> ~/Desktop/$serial.txt
+	
+	elif [ "$macOS" = 11.* ]
+
+		then
+	
+			echo "Metal: Supported" >> ~/Desktop/$serial.txt
+
+	else
+		
+		if test -z "$metal"
+	
+			then
+			
+				if [ "$macOS" = 11.* ]
+			
+					then
+					
+						echo "Metal: Supported" >> ~/Desktop/$serial.txt
+					
+				fi
+	
+		else
+	
+			echo "Metal: Not Supported" >> ~/Desktop/$serial.txt
+		
+		fi
+	
 	fi
+
+
+
+
+
+
 
 
 	# displays data
@@ -409,10 +492,54 @@ function LAPTOPINTEGRATEDGRAPHICSINFO(){
 		| awk '{print $2}'
 		)
 	
-	if [ "$metal" == "Supported," ]
-		then echo "Metal: Supported" >> ~/Desktop/$serial.txt
-		else echo "Metal: Not Supported" >> ~/Desktop/$serial.txt
+# 	if [ "$metal" == "Supported," ]
+# 		then echo "Metal: Supported" >> ~/Desktop/$serial.txt
+# 		else echo "Metal: Not Supported" >> ~/Desktop/$serial.txt
+# 	fi
+
+
+
+
+	# new version
+	if [ "$metal" = "Supported," ]
+
+		then
+	
+			echo "Metal: Supported" >> ~/Desktop/$serial.txt
+	
+	elif [ "$macOS" = 11.* ]
+
+		then
+	
+			echo "Metal: Supported" >> ~/Desktop/$serial.txt
+
+	else
+		
+		if test -z "$metal"
+	
+			then
+			
+				if [ "$macOS" = 11.* ]
+			
+					then
+					
+						echo "Metal: Supported" >> ~/Desktop/$serial.txt
+					
+				fi
+	
+		else
+	
+			echo "Metal: Not Supported" >> ~/Desktop/$serial.txt
+		
+		fi
+	
 	fi
+
+
+
+
+
+
 
 	
 	# displays info
@@ -481,11 +608,56 @@ function LAPTOPDUALGRAPHICSINFO(){
 		| grep "Metal:" \
 		| awk '{print $2}'
 		)
+
+
+
+
+	# new version
+	if [ "$metal" = "Supported," ]
+
+		then
 	
-	if [ "$metal" == "Supported," ]
-		then echo "Metal: Supported" >> ~/Desktop/$serial.txt
-		else echo "Metal: Not Supported" >> ~/Desktop/$serial.txt
+			echo "Metal: Supported" >> ~/Desktop/$serial.txt
+	
+	elif [ "$macOS" = 11.* ]
+
+		then
+	
+			echo "Metal: Supported" >> ~/Desktop/$serial.txt
+
+	else
+		
+		if test -z "$metal"
+	
+			then
+			
+				if [ "$macOS" = 11.* ]
+			
+					then
+					
+						echo "Metal: Supported" >> ~/Desktop/$serial.txt
+					
+				fi
+	
+		else
+	
+			echo "Metal: Not Supported" >> ~/Desktop/$serial.txt
+		
+		fi
+	
 	fi
+
+
+
+
+
+
+#  testing new version
+# 	
+# 	if [ "$metal" == "Supported," ]
+# 		then echo "Metal: Supported" >> ~/Desktop/$serial.txt
+# 		else echo "Metal: Not Supported" >> ~/Desktop/$serial.txt
+# 	fi
 		
 
 	# displays info
@@ -580,7 +752,7 @@ function BATTERYINFO(){
 		| awk '{print $5}'
 		)
 
-	echo "Full Charge Capacity: $batteryCapacity" >> ~/Desktop/$serial.txt
+	echo "Full Charge Capacity (mAh): $batteryCapacity" >> ~/Desktop/$serial.txt
 
 	local batteryCharge=$(
 		system_profiler SPPowerDataType \
@@ -588,7 +760,7 @@ function BATTERYINFO(){
 		| awk '{print $4}'
 		)
 
-	echo "Charge Remaining: $batteryCharge" >> ~/Desktop/$serial.txt
+# 	echo "Charge Remaining: $batteryCharge" >> ~/Desktop/$serial.txt
 
 	local batteryAmp=$(
 		system_profiler SPPowerDataType \
@@ -596,7 +768,7 @@ function BATTERYINFO(){
 		| awk '{print $3}'
 		)
 
-	echo "Amperage (mA): $batteryAmp" >> ~/Desktop/$serial.txt
+# 	echo "Amperage (mA): $batteryAmp" >> ~/Desktop/$serial.txt
 
 	local batteryVolt=$(
 		system_profiler SPPowerDataType \
@@ -604,8 +776,34 @@ function BATTERYINFO(){
 		| awk '{print $3}'
 		)
 
-	echo "Voltage (mV): $batteryVolt" >> ~/Desktop/$serial.txt
+# 	echo "Voltage (mV): $batteryVolt" >> ~/Desktop/$serial.txt
+
+
+	local batteryChargeBigSur=$(
+		system_profiler SPPowerDataType \
+		| head -30 \
+		| grep "State of Charge (%):" \
+		| awk '{print $5}'
+		)
+
+	if [[ "$macOS" = 11.* ]]
+
+		then
 	
+			echo "Charge Remaining (%): $batteryChargeBigSur" >> ~/Desktop/$serial.txt
+		
+	else
+
+		echo "Battery Charge Remaining (mAh): $batteryCharge" >> ~/Desktop/$serial.txt
+
+		echo "Battery Amperage (mA): $batteryAmp" >> ~/Desktop/$serial.txt
+
+		echo "Battery Voltage (mV): $batteryVolt" >> ~/Desktop/$serial.txt
+
+	fi
+
+
+
 	chargerConnected=$(
 		system_profiler SPPowerDataType \
 		| grep -A 2 "AC Charger Information" \
@@ -672,7 +870,7 @@ function ACCHARGERINFO(){
 	# tests to see if charger information is available, notifies user if not
 	if test -z "chargerVendor"
 		then 
-			osascript -e 'tell app "Terminal" to display notification "Charger Information not available, skipping it....." with title "Diagnostic Tool v2.2 - The Mac Support Store"'
+			osascript -e 'tell app "Terminal" to display notification "Charger Information not available, skipping it....." with title "Diagnostic Tool - The Mac Support Store"'
 	elif [ "$chargerVendor" =="Apple Inc." ]
 		then
 			echo "Manufacturer: $chargerVendor" >> ~/Desktop/$serial.txt
@@ -1025,7 +1223,7 @@ function NETWORKINFOSTART {
 # contains instructions for printing disk usage to report
 function DISKUSAGEINFO(){
 
-	osascript -e 'tell app "Terminal" to display notification "Calculating Disk usage....." with title "Diagnostic Tool v2.2 - The Mac Support Store"'
+	osascript -e 'tell app "Terminal" to display notification "Calculating Disk usage....." with title "Diagnostic Tool - The Mac Support Store"'
 
 	if [ "$fsType" = "APFS" ]
 		
@@ -1049,7 +1247,7 @@ function DISKUSAGEINFO(){
 # this should be an external (background operation) in the next version
 function USERDIRECTORYUSAGEINFO(){
 
-	osascript -e 'tell app "Terminal" to display notification "Calculating User Directory usage....." with title "Diagnostic Tool v2.2 - The Mac Support Store"'
+	osascript -e 'tell app "Terminal" to display notification "Calculating User Directory usage....." with title "Diagnostic Tool - The Mac Support Store"'
 
 	cd ~
 
@@ -1073,7 +1271,7 @@ function MALWARESCAN {
 # contains instructions for extracting previous 72 hours of shutdown cause logs
 function SHUTDOWNLOG {
 
-	log show --predicate 'eventMessage contains "Previous shutdown cause"' --last 14d --style compact \
+	log show --predicate 'eventMessage contains "Previous shutdown cause"' --last 10d --style compact \
 	| awk '{print $1,$2,$7,$8,$9}' > "/tmp/mssfiles/shutdownlog.txt" &
 
 	echo $! > /tmp/mssfiles/shutdownlogpid.txt
@@ -1082,9 +1280,9 @@ function SHUTDOWNLOG {
 		cat /tmp/mssfiles/shutdownlogpid.txt
 		)
 		
-	sleep 30; osascript -e 'tell app "Terminal" to display notification "Exporting logs..... This might take a moment." with title "Diagnostic Tool v2.2 - The Mac Support Store"'
+	sleep 30; osascript -e 'tell app "Terminal" to display notification "Exporting logs..... This might take a moment." with title "Diagnostic Tool - The Mac Support Store"'
 
-	sleep 10; osascript -e 'tell app "Terminal" to display notification "Concatenating logs....." with title "Diagnostic Tool v2.2 - The Mac Support Store"'
+	sleep 10; osascript -e 'tell app "Terminal" to display notification "Concatenating logs....." with title "Diagnostic Tool - The Mac Support Store"'
 
 		
 	wait $shutdownLogPID
@@ -1094,7 +1292,7 @@ function SHUTDOWNLOG {
 # contains instructions for playing an audio sample to test the speakers
 function SOUNDTEST {
 
-	osascript -e 'tell app "Terminal" to display dialog "Sound Test will now begin" with title "Diagnostic Tool v2.2 - The Mac Support Store" buttons {"Gotcha"} with icon caution giving up after 5' &> /dev/null
+	osascript -e 'tell app "Terminal" to display dialog "Sound Test will now begin" with title "Diagnostic Tool - The Mac Support Store" buttons {"Okay"} default button 1 with icon note giving up after 5' &> /dev/null
 
 	osascript -e 'set volume output volume 100' &> /dev/null
 
@@ -1108,7 +1306,7 @@ function CAMERATEST {
 	# opens photo booth in the background
 	open -a Photo\ Booth -g
 
-	osascript -e 'tell app "Terminal" to display dialog "Hey Super Tech, make sure that webcam works" with title "Diagnostic Tool v2.2 - The Mac Support Store" buttons {"Got it"} with icon stop giving up after 5' &> /dev/null
+	osascript -e 'tell app "Terminal" to display dialog "Camera test will now begin" with title "Diagnostic Tool - The Mac Support Store" buttons {"Okay"} default button 1 with icon note giving up after 5' &> /dev/null
 
 
 }
@@ -1116,13 +1314,13 @@ function CAMERATEST {
 # contains instructions for opening DriveDx and notifying user to save the report
 function DRIVEDX {
 
-	osascript -e 'tell app "Terminal" to display notification "Opening DriveDx....." with title "Diagnostic Tool v2.2 - The Mac Support Store"'
+	osascript -e 'tell app "Terminal" to display notification "Opening DriveDx....." with title "Diagnostic Tool - The Mac Support Store"'
 
 	/Volumes/diagv2/.Resources/DriveDx.app/Contents/MacOS/DriveDx &
 
 	sleep 2;
 
-	osascript -e 'tell app "Terminal" to display dialog "Hey Super Tech, make sure you save that DriveDx report" with title "Diagnostic Tool v2.2 - The Mac Support Store" buttons {"Got it"} with icon stop giving up after 5' &> /dev/null
+	osascript -e 'tell app "Terminal" to display dialog "Drive test will now begin" with title "Diagnostic Tool - The Mac Support Store" buttons {"Okay"} default button 1 with icon note giving up after 5' &> /dev/null
 
 }
 
@@ -1161,7 +1359,7 @@ function DRIVEDX {
 # 	
 # 	esac
 # 
-# 	osascript -e 'tell app "Terminal" to display notification "Exporting your system profile....." with title "Diagnostic Tool v2.2 - The Mac Support Store"'
+# 	osascript -e 'tell app "Terminal" to display notification "Exporting your system profile....." with title "Diagnostic Tool - The Mac Support Store"'
 # 
 # }
 # 
@@ -1310,7 +1508,7 @@ function DRIVEDX {
 function MAIN {
 
 	# sends the user a notification prompt that the diagnostic is beginning with a prompt and a 5 second timeout
-	osascript -e 'tell app "Terminal" to display dialog "Running your diagnostic, please wait." with title "Diagnostic Tool v2.2 - The Mac Support Store" buttons {"Right on!"} default button 1 with icon note giving up after 5' &> /dev/null
+	osascript -e 'tell app "Terminal" to display dialog "Running your diagnostic, please wait." with title "Diagnostic Tool - The Mac Support Store" buttons {"Okay"} default button 1 with icon note giving up after 5' &> /dev/null
 
 
 
@@ -1333,7 +1531,7 @@ function MAIN {
 		| awk '{print $4}'
 		)
 
-	echo "Diagnostic Tool v2.2 -- The Mac Support Store" \
+	echo "Diagnostic Tool -- The Mac Support Store" \
 	> ~/Desktop/$serial.txt
 
 	echo >> ~/Desktop/$serial.txt
@@ -1377,7 +1575,44 @@ function MAIN {
 		| awk '{print $4,$5,$6,$7}'
 		)
 
-	echo "Boot ROM Version: $bootRom" >> ~/Desktop/$serial.txt
+# 	echo "Boot ROM Version: $bootRom" >> ~/Desktop/$serial.txt
+
+
+	macOS=$(
+		system_profiler SPSoftwareDataType \
+		| grep "System Version" \
+		| awk '{print $4}'
+		)
+	
+	bootRomBigSur=$(
+		system_profiler SPHardwareDataType \
+		| grep "System Firmware Version:" \
+		| awk '{print $4,$5,$6,$7}'
+		)
+
+	if [[ "$macOS" = 11.* ]]
+
+		then
+		
+			echo "Boot ROM Version: $bootRomBigSur" >> ~/Desktop/$serial.txt
+		
+	else
+
+		echo "Boot ROM Version: $bootRom" >> ~/Desktop/$serial.txt
+	
+	fi
+
+
+
+	bootMode=$(
+		system_profiler SPSoftwareDataType \
+		| grep "Boot Mode:" \
+		| awk '{print $3}'
+		)
+
+	echo "Boot Mode: $bootMode" >> ~/Desktop/$serial.txt
+
+
 
 	# system integrity protection status
 	csrutilStatus=$(
@@ -1450,7 +1685,7 @@ function MAIN {
 
 
 
-	osascript -e 'tell app "Terminal" to display notification "Generating your report....." with title "Diagnostic Tool v2.2 - The Mac Support Store"'
+	osascript -e 'tell app "Terminal" to display notification "Generating your report....." with title "Diagnostic Tool - The Mac Support Store"'
 
 
 	# progress bar
@@ -1508,7 +1743,7 @@ function MAIN {
 
 	echo "Wireless Statistics:" >> ~/Desktop/$serial.txt
 
-	osascript -e 'tell app "Terminal" to display notification "Taking a Wi-Fi sample....." with title "Diagnostic Tool v2.2 - The Mac Support Store"'
+	osascript -e 'tell app "Terminal" to display notification "Taking a Wi-Fi sample....." with title "Diagnostic Tool - The Mac Support Store"'
 
 
 	WIRELESSSIGNALINFO
@@ -1622,7 +1857,7 @@ function MAIN {
 
 	# runs the system profiler to export data for aws
 	# currently not in use
-	# OUTPUTSTART &
+	OUTPUTSTART &
 
 
 
@@ -1774,7 +2009,7 @@ function MAIN {
 
 	echo "Malware Scan:" >> ~/Desktop/$serial.txt
 
-	sleep 5; osascript -e 'tell app "Terminal" to display notification "Scanning for malware....." with title "Diagnostic Tool v2.2 - The Mac Support Store"'
+	sleep 5; osascript -e 'tell app "Terminal" to display notification "Scanning for malware....." with title "Diagnostic Tool - The Mac Support Store"'
 
 
 	clear && echo -ne '###########################-------[75%]\r'
@@ -1786,7 +2021,7 @@ function MAIN {
 
 
 	# currently not in use
-	# wait OUTPUTFILES
+	wait OUTPUTFILES
 
 
 	clear && echo -ne '#############################-----[85%]\r'
@@ -1811,7 +2046,7 @@ function MAIN {
 
 
 	# cleanup functions
-	osascript -e 'tell app "Terminal" to display notification "Cleaning up....." with title "Diagnostic Tool v2.2 - The Mac Support Store"'
+	osascript -e 'tell app "Terminal" to display notification "Cleaning up....." with title "Diagnostic Tool - The Mac Support Store"'
 
 	rm -rf /tmp/mssfiles
 	
