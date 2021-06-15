@@ -1,5 +1,19 @@
 # Change-log:
 
+
+# v2.2 - 6/15/21
+bug fixes - big sur
+- fixed graphics info section regarding metal support not printing correctly
+- fixed battery info section to correctly detail the information available on big sur
+
+changes
+- reintroduced output of system profile in xml/json
+- now exports relevent facets to a folder named after the host machine's serial number
+    - this can be annoying if this extra output is not desiered
+    - comment out "OUTPUTSTART" near the end of MAIN if this additional output is undesired
+
+
+
 # v2.2 - In progress - 6/11/21
 
 bug fixes - big sur
