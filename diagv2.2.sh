@@ -207,10 +207,6 @@ function DESKTOPGRAPHICSINFO(){
 		| awk '{print $2}'
 		)
 
-# 	if [ "$metal" == "Supported," ]
-# 		then echo "Metal: Supported" >> ~/Desktop/$serial.txt
-# 		else echo "Metal: Not Supported" >> ~/Desktop/$serial.txt
-# 	fi
 
 
 
@@ -377,10 +373,6 @@ function MACPROGRAPHICSINFO(){
 		)
 
 
-# 	if [ "$metal" == "Supported," ]
-# 		then echo "Metal: Supported" >> ~/Desktop/$serial.txt
-# 		else echo "Metal: Not Supported" >> ~/Desktop/$serial.txt
-# 	fi
 
 
 
@@ -492,10 +484,6 @@ function LAPTOPINTEGRATEDGRAPHICSINFO(){
 		| awk '{print $2}'
 		)
 	
-# 	if [ "$metal" == "Supported," ]
-# 		then echo "Metal: Supported" >> ~/Desktop/$serial.txt
-# 		else echo "Metal: Not Supported" >> ~/Desktop/$serial.txt
-# 	fi
 
 
 
@@ -652,31 +640,6 @@ function LAPTOPDUALGRAPHICSINFO(){
 
 
 
-#  testing new version
-# 	
-# 	if [ "$metal" == "Supported," ]
-# 		then echo "Metal: Supported" >> ~/Desktop/$serial.txt
-# 		else echo "Metal: Not Supported" >> ~/Desktop/$serial.txt
-# 	fi
-		
-
-	# displays info
-# 	local dispType=$(
-# 		system_profiler SPDisplaysDataType \
-# 		| grep "Display Type" \
-# 		| awk '{print $3,$4,$5}'
-# 		)
-# 
-# 	echo "Display Type: $dispType" >> ~/Desktop/$serial.txt
-# 
-# 	local dispRes=$(
-# 		system_profiler SPDisplaysDataType \
-# 		| grep "Resolution" \
-# 		| awk '{print $2,$3,$4,$5}'
-# 		)
-# 
-# 	echo "Resolution: $dispRes" >> ~/Desktop/$serial.txt
-
 	local dispInfo=$(
 		system_profiler SPDisplaysDataType \
 		| tail -30 \
@@ -760,7 +723,6 @@ function BATTERYINFO(){
 		| awk '{print $4}'
 		)
 
-# 	echo "Charge Remaining: $batteryCharge" >> ~/Desktop/$serial.txt
 
 	local batteryAmp=$(
 		system_profiler SPPowerDataType \
@@ -768,7 +730,6 @@ function BATTERYINFO(){
 		| awk '{print $3}'
 		)
 
-# 	echo "Amperage (mA): $batteryAmp" >> ~/Desktop/$serial.txt
 
 	local batteryVolt=$(
 		system_profiler SPPowerDataType \
@@ -776,7 +737,6 @@ function BATTERYINFO(){
 		| awk '{print $3}'
 		)
 
-# 	echo "Voltage (mV): $batteryVolt" >> ~/Desktop/$serial.txt
 
 
 	local batteryChargeBigSur=$(
@@ -1233,6 +1193,14 @@ function DISKUSAGEINFO(){
 			| awk '{printf"%-25s%-10s%-10s%-10s\n", $9,$3,$4,$5}' \
 			>> ~/Desktop/$serial.txt
 			
+	elif [ "$macOS" = "10.14.*" ]
+
+		then
+
+			df -H / \
+			| awk '{printf"%-25s%-10s%-10s%-10s\n", $9,$3,$4,$5}' \
+			>> ~/Desktop/$serial.txt
+
 	else
 	
 		df -H / \
@@ -1571,8 +1539,6 @@ function MAIN {
 		| grep "Boot ROM" \
 		| awk '{print $4,$5,$6,$7}'
 		)
-
-# 	echo "Boot ROM Version: $bootRom" >> ~/Desktop/$serial.txt
 
 
 	macOS=$(
