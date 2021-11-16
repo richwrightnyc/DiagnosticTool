@@ -1,6 +1,6 @@
 #! /bin/bash
 
-# Diagnostic Tool v2.2 - Rich Wright (HudsonOnHere)
+# Diagnostic Tool v2.2.1 - Rich Wright (HudsonOnHere)
 # This program is provided as is, with no waranty or guarantee of any kind.
 # It does not perform any destructive actions,
 # but nonetheless always remember to follow best practices.
@@ -15,7 +15,7 @@ function PRODUCTDESCRIPTION {
 
 
 	local description=$(
-		./.Resources/warrantylookup-master/bin/swiftMacWarranty \
+		/Volumes/DiagnosticTool/.Resources/warrantylookup-master/bin/swiftMacWarranty \
 		| grep "PROD_DESCR:" \
 		| awk '/PROD_DESCR/ {print substr($0, index($0,$2))}'
 		)
@@ -380,7 +380,6 @@ function MACPROGRAPHICSINFO(){
 
 
 
-
 	# new version
 	if [ "$metal" = "Supported," ]
 
@@ -415,10 +414,6 @@ function MACPROGRAPHICSINFO(){
 		fi
 	
 	fi
-
-
-
-
 
 
 
@@ -1230,7 +1225,7 @@ function USERDIRECTORYUSAGEINFO(){
 # contains instructions for running a malware scan in the background 
 function MALWARESCAN {
 
-	./.Resources/DetectX\ Swift.app/Contents/MacOS/DetectX\ Swift search > /tmp/DiagnosticTool/malwarescan.txt &
+	/Volumes/DiagnosticTool/.Resources/DetectX\ Swift.app/Contents/MacOS/DetectX\ Swift search > /tmp/DiagnosticTool/malwarescan.txt &
 
 	echo $! > /tmp/DiagnosticTool/detectxpid.txt
 
@@ -1268,7 +1263,7 @@ function SOUNDTEST {
 
 	osascript -e 'set volume output volume 100' &> /dev/null
 
-	afplay ./.Resources/audiotest.m4a &
+	afplay /Volumes/DiagnosticTool/.Resources/audiotest.m4a &
 
 }
 
@@ -1288,7 +1283,7 @@ function DRIVEDX {
 
 	osascript -e 'tell app "Terminal" to display notification "Opening DriveDx....." with title "Diagnostic Tool"'
 
-	./.Resources/DriveDx.app/Contents/MacOS/DriveDx &
+	/Volumes/DiagnosticTool/.Resources/DriveDx.app/Contents/MacOS/DriveDx &
 
 	sleep 2;
 
@@ -1725,7 +1720,7 @@ function MAIN {
 
 
 	# prompts user and runs sound test in background
-	# SOUNDTEST &
+	SOUNDTEST &
 
 
 

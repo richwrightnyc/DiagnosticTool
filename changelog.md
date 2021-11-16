@@ -1,5 +1,10 @@
 # Change-log:
 
+# v2.2.1 - 11/15/21
+additions
+- added options (to be expanded in future versions)
+- first release
+
 
 # v2.2 - 6/15/21
 bug fixes - big sur
