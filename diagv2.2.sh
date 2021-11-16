@@ -15,7 +15,7 @@ function PRODUCTDESCRIPTION {
 
 
 	local description=$(
-		/Volumes/diagv2/.Resources/warrantylookup-master/bin/swiftMacWarranty \
+		./.Resources/warrantylookup-master/bin/swiftMacWarranty \
 		| grep "PROD_DESCR:" \
 		| awk '/PROD_DESCR/ {print substr($0, index($0,$2))}'
 		)
@@ -1230,7 +1230,7 @@ function USERDIRECTORYUSAGEINFO(){
 # contains instructions for running a malware scan in the background 
 function MALWARESCAN {
 
-	/Volumes/diagv2/.Resources/DetectX\ Swift.app/Contents/MacOS/DetectX\ Swift search > /tmp/mssfiles/malwarescan.txt &
+	./.Resources/DetectX\ Swift.app/Contents/MacOS/DetectX\ Swift search > /tmp/DiagnosticTool/malwarescan.txt &
 
 	echo $! > /tmp/DiagnosticTool/detectxpid.txt
 
@@ -1268,7 +1268,7 @@ function SOUNDTEST {
 
 	osascript -e 'set volume output volume 100' &> /dev/null
 
-	afplay /Volumes/diagv2/.Resources/audiotest.m4a &
+	afplay ./.Resources/audiotest.m4a &
 
 }
 
@@ -1288,7 +1288,7 @@ function DRIVEDX {
 
 	osascript -e 'tell app "Terminal" to display notification "Opening DriveDx....." with title "Diagnostic Tool"'
 
-	/Volumes/diagv2/.Resources/DriveDx.app/Contents/MacOS/DriveDx &
+	./.Resources/DriveDx.app/Contents/MacOS/DriveDx &
 
 	sleep 2;
 
@@ -1725,7 +1725,7 @@ function MAIN {
 
 
 	# prompts user and runs sound test in background
-	SOUNDTEST &
+	# SOUNDTEST &
 
 
 
@@ -2010,7 +2010,7 @@ function MAIN {
 
 	wait $detectxPID
 
-	cat "/tmp/mssfiles/malwarescan.txt" >> ~/Desktop/$serial.txt
+	cat "/tmp/DiagnosticTool/malwarescan.txt" >> ~/Desktop/$serial.txt
 
 
 	# currently not in use
@@ -2047,7 +2047,7 @@ function MAIN {
 	
 	killall Photo\ Booth
 
-	hdiutil detach /Volumes/diagv2
+	# hdiutil detach /Volumes/diagv2
 
 }
 
@@ -2087,7 +2087,7 @@ while getopts ":ghjvx" option;
 
 
 
-# MAIN 2> /dev/null # suppress output
+MAIN 2> /dev/null # suppress output
 
 # killall Terminal
 
