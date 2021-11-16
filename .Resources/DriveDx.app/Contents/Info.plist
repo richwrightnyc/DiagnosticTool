@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleDisplayName</key>
+	<string>DriveDx</string>
+	<key>CFBundleDocumentTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>driveDxLicense</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>DriveDx</string>
+			<key>CFBundleTypeName</key>
+			<string>DriveDx License</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSIsAppleDefaultForType</key>
+			<true/>
+			<key>LSTypeIsPackage</key>
+			<false/>
+			<key>NSPersistentStoreTypeKey</key>
+			<string>XML</string>
+		</dict>
+	</array>
+	<key>CFBundleExecutable</key>
+	<string>DriveDx</string>
+	<key>CFBundleIconFile</key>
+	<string>DriveDx.icns</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.binaryfruit.DriveDx</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>DriveDx</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.8.2</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>com.binaryfruit.drivedx.dxconfig</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>x-com-binaryfruit-drivedx-dxconfig-https</string>
+				<string>dxconfig</string>
+				<string>x-com-binaryfruit-drivedx-dxconfig</string>
+				<string>drivedx-dxconfig</string>
+				<string>drivedx-dxconfig-http</string>
+				<string>drivedx-dxconfig-https</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>drivedx-registration URL</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>drivedx-registration</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>drivedx-registration-http URL</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>drivedx-registration-http</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>drivedx-registration-https URL</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>drivedx-registration-https</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>drivedx-license URL</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>drivedx-license</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>drivedx-license-http URL</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>drivedx-license-http</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>drivedx-license-https URL</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>drivedx-license-https</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>drivedx-activation URL</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>drivedx-activation</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>drivedx-activation-http URL</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>drivedx-activation-https</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>x-com-binaryfruit-drivedx-license URL</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>x-com-binaryfruit-drivedx-license</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>x-com-binaryfruit-drivedx-license-http URL</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>x-com-binaryfruit-drivedx-license-http</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>x-com-binaryfruit-drivedx-license-https URL</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>x-com-binaryfruit-drivedx-license-https</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>x-com-binaryfruit-drivedx-registration URL</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>x-com-binaryfruit-drivedx-registration</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>x-com-binaryfruit-drivedx-registration-http URL</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>x-com-binaryfruit-drivedx-registration-http</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>x-com-binaryfruit-drivedx-registration-https URL</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>x-com-binaryfruit-drivedx-registration-https</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>x-com-binaryfruit-drivedx URL</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>x-com-binaryfruit-drivedx</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>x-com-binaryfruit-drivedx-http URL</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>x-com-binaryfruit-drivedx-http</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>x-com-binaryfruit-drivedx-https URL</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>x-com-binaryfruit-drivedx-https</string>
+			</array>
+		</dict>
+	</array>
+	<key>CFBundleVersion</key>
+	<string>610</string>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.utilities</string>
+	<key>LSMinimumSystemVersion</key>
+	<string>10.6.8</string>
+	<key>LSUIElement</key>
+	<true/>
+	<key>NSHighResolutionCapable</key>
+	<true/>
+	<key>NSHumanReadableCopyright</key>
+	<string>Copyright © 2012-2018 BinaryFruit. All rights reserved.</string>
+	<key>NSPrincipalClass</key>
+	<string>NSApplication</string>
+	<key>NSSupportsAutomaticGraphicsSwitching</key>
+	<true/>
+	<key>NSUserNotificationAlertStyle</key>
+	<string>banner</string>
+	<key>SUEnableSystemProfiling</key>
+	<string>YES</string>
+	<key>SUPublicDSAKeyFile</key>
+	<string>dsa_pub.pem</string>
+</dict>
+</plist>
