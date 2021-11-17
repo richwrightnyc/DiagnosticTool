@@ -1,4 +1,4 @@
-Diagnostic Tool -- The Mac Support Store
+Diagnostic Tool v2.2.1
 
 ----------------
 System Profile:
